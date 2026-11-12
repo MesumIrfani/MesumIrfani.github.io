@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mesum Ali Irfani Portfolio</title>
+<meta name="description" content="Mesum Ali Irfani, robotics engineer working on motion planning and control for autonomous vehicles, with UAV propulsion experience.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: multi-tab academic portfolio. Top bar with tabs, boxed "post" panels in the main column, profile sidebar on every tab. */
+:root {
+  --bg: #f2f4f6;
+  --surface: #ffffff;
+  --ink: #1d262e;
+  --muted: #5d6a75;
+  --line: #dde2e7;
+  --accent: #c94a10;
+  --ph: #e8ecef;
+  --ph-stripe: #dfe4e8;
+  --font-display: Cambria, Caladea, "Times New Roman", Georgia, serif;
+  --font-body: Cambria, Caladea, "Times New Roman", Georgia, serif;
+  --font-mono: Cambria, Caladea, "Times New Roman", Georgia, serif;
+  --radius: 4px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1419; --surface: #141e25; --ink: #e4eaef; --muted: #91a0ab;
+    --line: #26333d; --accent: #ff7a3d; --ph: #18242d; --ph-stripe: #1d2a34; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1419; --surface: #141e25; --ink: #e4eaef; --muted: #91a0ab;
+  --line: #26333d; --accent: #ff7a3d; --ph: #18242d; --ph-stripe: #1d2a34; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.65; }
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.25; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+ul { margin: 0; }
+.upper { text-transform: uppercase; letter-spacing: 0.16em; }
+.meta { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); letter-spacing: 0.03em; }
+.muted { color: var(--muted); }
+
+/* Placeholder images: swap each .ph for an <img> later */
+.ph {
+  background: repeating-linear-gradient(45deg, var(--ph), var(--ph) 10px, var(--ph-stripe) 10px, var(--ph-stripe) 20px);
+  border: 1px dashed var(--line); border-radius: var(--radius);
+  display: grid; place-items: center; text-align: center; padding: 12px;
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted);
+  aspect-ratio: 16 / 9; width: 100%;
+}
+.ph::before { content: "IMAGE \2192  " attr(data-label); }
+.ph.video::before { content: "VIDEO \2192  " attr(data-label); }
+.ph.logo { aspect-ratio: 1; width: 72px; flex: none; padding: 4px; font-size: 0.6rem; }
+.ph.logo::before { content: attr(data-label); }
+
+/* Header */
+header.top { position: sticky; top: 0; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top .bar { display: flex; align-items: stretch; height: 58px; }
+.top .name { display: flex; align-items: center; padding: 0 24px; border-right: 1px solid var(--line); font-family: var(--font-display); font-weight: 800; font-size: 0.85rem; color: var(--ink); white-space: nowrap; }
+.top .name:hover { text-decoration: none; color: var(--accent); }
+.tabs { display: flex; align-items: stretch; flex: 1; }
+.tabs a { display: flex; align-items: center; padding: 0 16px; font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; color: var(--muted); border-bottom: 2px solid transparent; }
+.tabs a:hover { color: var(--ink); text-decoration: none; }
+.tabs a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+@media (max-width: 1240px) {
+  .top .bar { flex-wrap: wrap; height: auto; }
+  .top .name { width: 100%; border-right: 0; border-bottom: 1px solid var(--line); padding: 12px 20px; }
+  .tabs { flex: 0 0 100%; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs a { padding: 12px 14px; white-space: nowrap; flex: none; }
+}
+
+/* Page frame */
+.frame { max-width: 1240px; margin: 0 auto; padding: 32px 24px 0; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 32px; align-items: start; }
+@media (max-width: 980px) { .frame { grid-template-columns: 1fr; } }
+main { display: grid; gap: 28px; min-width: 0; }
+.page { display: none; gap: 28px; }
+.page.active { display: grid; }
+
+/* Post panel */
+.post { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.post > header { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; padding: 26px 32px; border-bottom: 1px solid var(--line); }
+.post > header h2 { font-size: 1.25rem; font-weight: 800; }
+.post .inner { padding: 28px 32px; display: grid; gap: 18px; }
+@media (max-width: 600px) { .post > header, .post .inner { padding-left: 20px; padding-right: 20px; } }
+.prose { max-width: 68ch; }
+.prose p + p { margin-top: 14px; }
+
+/* Home hero */
+.hero { padding: 40px 32px; display: grid; gap: 8px; }
+.hero h1 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); font-weight: 800; }
+.hero .sub { font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; color: var(--muted); }
+.hero-banner { border-top: 1px solid var(--line); padding: 0; }
+.hero-banner .ph { border: 0; border-radius: 0; aspect-ratio: 21 / 8; }
+
+/* News list */
+.news { display: grid; gap: 0; }
+.news article { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.news article:first-child { padding-top: 0; }
+.news article:last-child { border-bottom: 0; padding-bottom: 0; }
+.news .ph { aspect-ratio: 4 / 3; }
+.news h3 { font-size: 0.98rem; font-weight: 700; }
+.news p { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+@media (max-width: 520px) { .news article { grid-template-columns: 1fr; } .news .ph { max-width: 220px; } }
+
+/* Entries (projects, experience, education) */
+.entry { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.entry:first-of-type { padding-top: 0; }
+.entry:last-child { border-bottom: 0; padding-bottom: 0; }
+.entry .label { font-family: var(--font-display); font-weight: 700; font-size: 0.66rem; color: var(--accent); }
+.entry h3 { font-size: 1.05rem; font-weight: 700; margin: 4px 0 6px; }
+.entry p, .entry li { color: var(--muted); font-size: 0.97rem; }
+.entry ul { padding-left: 18px; display: grid; gap: 4px; margin-top: 6px; }
+.entry.with-logo { grid-template-columns: 72px 1fr; gap: 20px; }
+@media (max-width: 680px) { .entry { grid-template-columns: 1fr; } .entry .ph:not(.logo) { max-width: 360px; } }
+.group-title { font-family: var(--font-display); font-weight: 800; font-size: 0.8rem; color: var(--muted); }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tag { font-family: var(--font-mono); font-size: 0.7rem; padding: 3px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); }
+
+.btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.btn { display: inline-block; padding: 8px 16px; border: 1px solid var(--line); border-radius: var(--radius); font-family: var(--font-display); font-weight: 700; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); background: var(--surface); }
+.btn:hover { border-color: var(--accent); text-decoration: none; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.interests { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0; list-style: none; }
+.interests li { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; border-left: 3px solid var(--accent); }
+@media (max-width: 600px) { .interests { grid-template-columns: 1fr; } }
+
+.media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.media-grid .wide { grid-column: 1 / -1; }
+
+.pub { padding: 20px 0; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.pub:first-of-type { padding-top: 0; }
+.pub:last-child { border-bottom: 0; padding-bottom: 0; }
+.pub h3 { font-size: 1rem; font-weight: 700; font-family: var(--font-body); }
+.status { display: inline-block; font-family: var(--font-mono); font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--accent); color: var(--accent); width: fit-content; }
+
+.skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.skills div { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+.skills h4 { font-size: 0.72rem; font-weight: 800; margin-bottom: 8px; }
+.skills p { color: var(--muted); font-size: 0.95rem; }
+@media (max-width: 600px) { .skills { grid-template-columns: 1fr; } }
+
+/* Sidebar profile */
+aside.side { position: sticky; top: 90px; display: grid; gap: 28px; }
+@media (max-width: 980px) { aside.side { position: static; } }
+.profile { text-align: center; padding: 32px 28px; display: grid; gap: 10px; justify-items: center; }
+.profile .ph { width: 150px; aspect-ratio: 1; border-radius: 50%; }
+.profile h2 { font-size: 1.05rem; font-weight: 800; margin-top: 8px; }
+.profile .role { font-family: var(--font-display); font-weight: 700; font-size: 0.66rem; color: var(--muted); }
+.profile blockquote { margin: 10px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); font-style: italic; color: var(--muted); font-size: 0.95rem; }
+.connect { padding: 24px 28px; }
+.connect h3 { font-size: 0.72rem; font-weight: 800; margin-bottom: 12px; }
+.connect ul { list-style: none; padding: 0; display: grid; gap: 0; }
+.connect li a { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 0.95rem; }
+.connect li:last-child a { border-bottom: 0; }
+.connect li a span:last-child { color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem; }
+.connect li a:hover { color: var(--accent); text-decoration: none; }
+
+footer.foot { max-width: 1240px; margin: 0 auto; padding: 32px 24px 40px; }
+
+/* Animated placeholders for media still to come */
+.ph { position: relative; overflow: hidden; }
+.ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%); transform: translateX(-100%); animation: shimmer 2.4s infinite; }
+@keyframes shimmer { to { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .ph::after { animation: none; } }
+.ph::before { content: "COMING SOON \2192  " attr(data-label); position: relative; z-index: 1; }
+.ph.video::before { content: "VIDEO COMING SOON \2192  " attr(data-label); }
+.ph.logo::before { content: attr(data-label); }
+
+/* Real media */
+.media { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.media figure, figure.one { margin: 0; display: grid; gap: 6px; align-content: start; }
+.media img, .media video, figure.one img, figure.one video { width: 100%; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); object-fit: cover; }
+.media video, figure.one video { background: #000; }
+.media .r169 { aspect-ratio: 16 / 9; }
+.media .r43 { aspect-ratio: 4 / 3; }
+.media .r916 { aspect-ratio: 9 / 16; }
+.media .r1 { aspect-ratio: 1; }
+.media.tall { grid-template-columns: repeat(auto-fill, minmax(140px, 170px)); }
+figcaption { font-size: 0.85rem; color: var(--muted); }
+.zoom { cursor: zoom-in; }
+.badge { position: absolute; top: 8px; left: 8px; z-index: 2; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: rgba(0,0,0,0.55); color: #fff; }
+.media figure, figure.one { position: relative; }
+.entry .media { margin-top: 12px; }
+.hero-banner video { display: block; width: 100%; aspect-ratio: 21 / 8; object-fit: cover; }
+
+/* Art gallery */
+.gallery { columns: 3 200px; column-gap: 12px; }
+.gallery figure { break-inside: avoid; margin: 0 0 12px; display: grid; gap: 5px; }
+.gallery img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; display: block; }
+.gallery figcaption { font-size: 0.85rem; color: var(--muted); line-height: 1.35; }
+.gallery figcaption b { color: var(--ink); font-weight: 600; }
+
+/* Lightbox */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(5,10,14,0.92); display: none; place-items: center; padding: 24px; }
+.lb.open { display: grid; }
+.lb img, .lb video { max-width: min(1400px, 100%); max-height: 90vh; border-radius: var(--radius); background: #000; }
+.lb button { position: absolute; top: 16px; right: 16px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 14px; font-family: var(--font-display); font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="bar">
+    <a class="name upper" href="#home">Mesum Ali Irfani</a>
+    <nav class="tabs upper" aria-label="Pages">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#uav">UAV &amp; Propulsion</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#honors">Honors &amp; Awards</a>
+      <a href="#art">Art</a>
+    </nav>
+  </div>
+</header>
+
+<div class="frame">
+<main>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home" data-page="home">
+  <article class="post">
+    <div class="hero">
+      <p class="meta">November 2026</p>
+      <h1 class="upper">Aerospace and Robotics Engineer</h1>
+      <p class="sub upper">UAV Design &amp; Propulsion · Motion Planning &amp; Control</p>
+      <p class="prose muted" style="margin-top:12px">I work on motion planning and safety-certified control for autonomous vehicles, from sampling-based global planners to NMPC with control barrier functions. My research is grounded in five years of hands-on UAV hardware work, where I now lead propulsion development.</p>
+      <div class="btns">
+        <!-- Put your CV next to this file as cv.pdf -->
+        <a class="btn primary" href="cv.pdf">Download CV</a>
+        <a class="btn" href="#research">View Research</a>
+        <a class="btn" href="#uav">UAV &amp; Propulsion</a>
+      </div>
+    </div>
+    <div class="hero-banner">
+      <video src="videos/banner-launch.mp4" poster="images/banner-launch-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Fixed-wing UAV catapult launch"></video>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Latest News</h2></header>
+    <div class="inner">
+      <div class="news">
+        <!-- Newest first. Copy an <article> block to add news. -->
+        <article>
+          <img src="images/convocation.jpg" alt="Receiving the MS degree at the NUST convocation" loading="lazy" style="aspect-ratio:4/3;object-fit:cover;object-position:52% 60%;border:1px solid var(--line);border-radius:var(--radius)">
+          <div><p class="meta">Oct 2026</p><h3>MS degree awarded at NUST convocation</h3><p>Graduated with an MS in Robotics and Intelligent Machine Engineering, CGPA 3.95 / 4.0.</p></div>
+        </article>
+        <article>
+          <img src="images/thesis-poster.jpg" alt="Thesis summary slide" loading="lazy" style="aspect-ratio:4/3;object-fit:cover;border:1px solid var(--line);border-radius:var(--radius)">
+          <div><p class="meta">Aug 2026</p><h3>MS thesis accepted with Grade A</h3><p>"Obstacle Avoidance for Marine Robots", a hybrid planning and control framework for USVs. <a href="#research">Watch the 3-minute summary</a></p></div>
+        </article>
+        <article>
+          <img src="images/mcs-vs-sunlight.jpg" alt="Paths planned by the Sunlight Algorithm and MCS-Connect in a maze" loading="lazy" style="aspect-ratio:4/3;object-fit:cover;background:#fff;border:1px solid var(--line);border-radius:var(--radius)">
+          <div><p class="meta">2026</p><h3>Journal paper under review at Ocean Engineering</h3><p>On MCS-Connect, a bidirectional path planner with adaptive inter-tree attraction. <a href="#publications">Publications</a></p></div>
+        </article>
+        <article>
+          <img src="images/flight-mesum.jpg" alt="Mesum at the launcher with the ground control transmitter" loading="lazy" style="aspect-ratio:4/3;object-fit:cover;object-position:60% 20%;border:1px solid var(--line);border-radius:var(--radius)">
+          <div><p class="meta">2026</p><h3>Flight test campaign</h3><p>On the field with the propulsion team for catapult launch and flight testing of a fixed-wing UAV. <a href="#uav">Watch</a></p></div>
+        </article>
+        <article>
+          <img src="images/cert-coursera-computational-motion-planning.jpg" alt="Coursera certificate" loading="lazy" style="aspect-ratio:4/3;object-fit:cover;object-position:top;background:#fff;border:1px solid var(--line);border-radius:var(--radius)">
+          <div><p class="meta">May 2025</p><h3>Completed Robotics: Computational Motion Planning</h3><p>University of Pennsylvania, via Coursera. <a href="certs/coursera-computational-motion-planning.pdf">View certificate</a></p></div>
+        </article>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="page-about" data-page="about">
+  <article class="post">
+    <header><h2 class="upper">About Me</h2><span class="meta">Islamabad, Pakistan</span></header>
+    <div class="inner">
+      <div class="prose">
+        <p>My research focuses on how autonomous vehicles decide where to go and how to get there safely: path planning in cluttered environments, trajectory optimization, and model predictive control with formal safety guarantees. I hold an MS in Robotics and Intelligent Machine Engineering from NUST, where my thesis built a full planning and control stack for unmanned surface vehicles.</p>
+        <p>Before robotics, I trained as an aerospace engineer (BS, Institute of Space Technology, cum laude), with coursework in flight and spacecraft dynamics and control. For almost five years at NaqCoDE Technologies I have worked on fixed-wing UAVs, and I now lead the propulsion team. That work keeps my research grounded in real vehicle dynamics, actuators and hardware limits.</p>
+        <p>I am seeking funded PhD opportunities in robotics, motion planning and control for aerial and marine autonomous systems.</p>
+        <p>Outside engineering I draw and paint, mostly Arabic calligraphy and graphite portraits. A selection is on the <a href="#art">Art</a> tab.</p>
+      </div>
+      <div class="btns"><a class="btn primary" href="cv.pdf">Download CV</a></div>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Research Interests</h2></header>
+    <div class="inner">
+      <ul class="interests">
+        <li>Sampling-based and kinodynamic motion planning</li>
+        <li>Trajectory optimization</li>
+        <li>Nonlinear MPC and safety-critical control (CBFs)</li>
+        <li>Autonomy for marine and aerial vehicles</li>
+        <li>State estimation and multi-target tracking</li>
+        <li>Propulsion-aware vehicle design and control</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Skills</h2></header>
+    <div class="inner">
+      <div class="skills">
+        <div><h4 class="upper">Motion Planning</h4><p>RRT family, bidirectional and kinodynamic planning, B-spline optimization, COLREGs-aware navigation, statistical benchmarking</p></div>
+        <div><h4 class="upper">Control &amp; Estimation</h4><p>NMPC (acados), control barrier functions, IMM tracking, disturbance observers, flight and spacecraft dynamics</p></div>
+        <div><h4 class="upper">Robotics Software</h4><p>ROS 2, Gazebo, SLAM, Python, MATLAB, embedded C / C++, Git, LaTeX</p></div>
+        <div><h4 class="upper">Propulsion &amp; Analysis</h4><p>Piston engines, micro turbines, solid rocket motors, propeller matching, CFD, FEA, FSI (ANSYS)</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ RESEARCH ============ -->
+<section class="page" id="page-research" data-page="research">
+  <article class="post">
+    <header><h2 class="upper">Obstacle Avoidance for Marine Robots</h2><span class="meta">MS Thesis · NUST · Grade A</span></header>
+    <div class="inner">
+      <p class="prose muted">A hybrid global and local planning and control framework for unmanned surface vehicles in cluttered, dynamic marine environments, with safety certified at the control layer. Supervised by Dr. Khawaja Fahad Iqbal.</p>
+      <div class="media-grid">
+        <figure class="wide" style="margin:0;display:grid;gap:8px">
+          <video controls preload="metadata" playsinline poster="images/thesis-poster.jpg" style="width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:var(--radius);background:#fff">
+            <source src="videos/thesis-summary.mp4" type="video/mp4">
+            Your browser cannot play this video. <a href="videos/thesis-summary.mp4">Download it here</a>.
+          </video>
+          <figcaption class="meta">Thesis summary, 3 min: problem, framework, planner, perception, control and results.</figcaption>
+        </figure>
+<figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/thesis-architecture.jpg" alt="Layered navigation architecture: planner, kinodynamic optimizer, NMPC, perception and disturbance observer" loading="lazy"><figcaption>Layered navigation architecture: planner, kinodynamic optimizer, NMPC, perception and disturbance observer</figcaption></figure>
+<figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-effect-sizes.jpg" alt="Effect sizes of MCS-Connect against five baselines across 24 scenarios" loading="lazy"><figcaption>Effect sizes of MCS-Connect against five baselines across 24 scenarios</figcaption></figure>
+      </div>
+      <div class="media" style="margin-top:4px">
+        <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/thesis-closedloop.jpg" alt="Closed-loop tracks on six maps under the full sea state" loading="lazy"><figcaption>Closed-loop tracks on six maps under the full sea state</figcaption></figure>
+        <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/thesis-colregs.jpg" alt="The four canonical COLREGs encounters: overtaking, head-on, crossing give-way and stand-on" loading="lazy"><figcaption>The four canonical COLREGs encounters: overtaking, head-on, crossing give-way and stand-on</figcaption></figure>
+        <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/thesis-kinodynamic.jpg" alt="Kinodynamic pipeline stage by stage: raw path, densification, clearance guard, B-spline, final" loading="lazy"><figcaption>Kinodynamic pipeline stage by stage: raw path, densification, clearance guard, B-spline, final</figcaption></figure>
+      </div>
+      <div class="entry" style="grid-template-columns:1fr;padding-top:8px">
+        <div>
+          <p class="label upper">Architecture</p>
+          <ul>
+            <li><strong>Global planner:</strong> MCS-Connect, a bidirectional sampling planner with adaptive inter-tree magnetic coupling and an obstacle-proximity penalty.</li>
+            <li><strong>Trajectory layer:</strong> B-spline kinodynamic optimizer with a clearance-preserving smoothing guard.</li>
+            <li><strong>Local layer:</strong> COLREGs-supervised NMPC (acados) on the 3-DOF Fossen CyberShip II model, with high-order control barrier functions as safety certificates.</li>
+            <li><strong>Perception and robustness:</strong> IMM multi-target tracking and a disturbance observer for waves, current and wind.</li>
+            <li><strong>Validation:</strong> a 14,400-run statistically tested benchmark against RRT-Connect, Informed RRT* and BIT*, plus a closed-loop scenario campaign.</li>
+          </ul>
+          <div class="tags"><span class="tag">Python</span><span class="tag">acados</span><span class="tag">NMPC</span><span class="tag">CBF</span><span class="tag">COLREGs</span><span class="tag">Bayesian optimization</span></div>
+          <div class="btns">
+            <!-- Link your thesis PDF and code when you can share them -->
+            <a class="btn" href="#research">Thesis PDF</a>
+            <a class="btn" href="#research">Code</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="page" id="page-projects" data-page="projects">
+  <article class="post">
+    <header><h2 class="upper">Technical Projects</h2><span class="meta">Robotics · Planning · Control</span></header>
+    <div class="inner">
+      <p class="group-title upper">Ongoing Projects</p>
+
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Research · Planning · Journal paper under review</p>
+          <h3>MCS-Connect: magnetically coupled bidirectional path planning</h3>
+          <p>A bidirectional sampling-based global planner for USVs in cluttered water. Two Sunlight-style trees grow toward each other under an adaptive inter-tree attraction, with an obstacle-proximity penalty that keeps paths away from walls. Tuned by Bayesian optimization, and benchmarked over 14,400 runs against the Sunlight Algorithm, Sunlight-Connect, RRT-Connect, Informed RRT* and BIT* on custom maps, MovingAI mazes and real archipelagic charts, with Welch tests and Cohen's d for every scenario. Current work extends the planner with formal completeness and optimality analysis.</p>
+          <div class="tags"><span class="tag">Bidirectional search</span><span class="tag">Sampling-based planning</span><span class="tag">Statistical benchmarking</span><span class="tag">Python</span></div>
+          <div class="media">
+            <figure><span class="badge">Animation</span><video class="r169 zoom" src="videos/mcs-paths.mp4" poster="images/mcs-paths-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Planned paths: six planners, Sunlight vs MCS-Connect, and archipelagic waters</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-qualitative.jpg" alt="Qualitative paths on a dense maze: MCS-Connect against five baselines" loading="lazy"><figcaption>Qualitative paths on a dense maze: MCS-Connect against five baselines</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-archipelago.jpg" alt="Paths planned on a real archipelagic-water chart" loading="lazy"><figcaption>Paths planned on a real archipelagic-water chart</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-effect-sizes.jpg" alt="Per-scenario effect sizes: first-solution time, path length, nodes, collision checks" loading="lazy"><figcaption>Per-scenario effect sizes: first-solution time, path length, nodes, collision checks</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-anytime.jpg" alt="Anytime quality: BIT* and Informed RRT* need seconds to reach the length MCS-Connect returns at once" loading="lazy"><figcaption>Anytime quality: BIT* and Informed RRT* need seconds to reach the length MCS-Connect returns at once</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-mazes.jpg" alt="The six MovingAI maze benchmarks" loading="lazy"><figcaption>The six MovingAI maze benchmarks</figcaption></figure>
+          </div>
+          <div class="btns"><a class="btn" href="#publications">Paper</a><a class="btn" href="#research">Thesis</a></div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="ph" data-label="EFI test bench"></div>
+        <div><p class="label upper">Embedded Control · Propulsion</p><h3>Custom EFI and ECU for a DLE 60 engine</h3><p>Converting a carbureted two-stroke UAV engine to electronic fuel injection with a self-built microcontroller ECU for closed-loop fuel and ignition control.</p><div class="tags"><span class="tag">ESP32</span><span class="tag">Embedded C</span><span class="tag">Engine control</span></div></div>
+      </div>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Past Projects</h2></header>
+    <div class="inner">
+
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Mobile Robotics · ROS 2</p>
+          <h3>Robot navigation and SLAM in ROS 2</h3>
+          <p>Mapping, localization and autonomous navigation of a TurtleBot3 Waffle in ROS 2 Humble. Graph-based occupancy-grid mapping with slam_toolbox, localization against the saved map, and Nav2 path planning to goal poses, then re-run with Gaussian noise injected into the sensor model to study how localization degrades.</p>
+          <div class="tags"><span class="tag">ROS 2 Humble</span><span class="tag">slam_toolbox</span><span class="tag">Nav2</span><span class="tag">Gazebo</span><span class="tag">RViz</span></div>
+          <div class="media">
+            <figure><span class="badge">Animation</span><video class="r43 zoom" src="videos/slam-mapping.mp4" poster="images/slam-mapping-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Building the occupancy map with slam_toolbox (3x speed)</figcaption></figure>
+            <figure><span class="badge">Animation</span><video class="r43 zoom" src="videos/slam-navigation.mp4" poster="images/slam-navigation-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Nav2 planning and driving to a goal pose (2x speed)</figcaption></figure>
+            <figure><span class="badge">Animation</span><video class="r43 zoom" src="videos/slam-noise.mp4" poster="images/slam-noise-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Localization with large sensor noise (σ = 0.1)</figcaption></figure>
+            <figure><img class="r43 zoom" src="images/slam-gazebo.jpg" alt="TurtleBot3 in the Gazebo world" loading="lazy"><figcaption>TurtleBot3 in the Gazebo world</figcaption></figure>
+            <figure><img class="r43 zoom" src="images/slam-map.jpg" alt="Completed map used for localization" loading="lazy"><figcaption>Completed map used for localization</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Manipulation · Control</p>
+          <h3>Liquid pouring with a ROT3U robotic arm</h3>
+          <p>An application module inspired by liquid-metal pouring in foundries, one of the dull, dirty and dangerous jobs robots should take over. Inverse kinematics gives the joint angles for each waypoint, smooth joint trajectories are generated between them, and an Arduino drives the servos to pick up a cup, pour into a second cup and return home.</p>
+          <div class="tags"><span class="tag">Inverse kinematics</span><span class="tag">Trajectory generation</span><span class="tag">Arduino</span><span class="tag">Servo control</span></div>
+          <div class="media tall">
+            <figure><span class="badge">Animation</span><video class="r916 zoom" src="videos/rot3u-pouring.mp4" poster="images/rot3u-pouring-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Pick, pour and return demo (1.5x speed)</figcaption></figure>
+            <figure><img class="r916 zoom" src="images/rot3u-arm.jpg" alt="The ROT3U arm on the bench" loading="lazy"><figcaption>The ROT3U arm on the bench</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Machine Learning · Signal Processing</p>
+          <h3>Pathology classification in phonocardiograms</h3>
+          <p>Classifying heart-sound recordings as normal or abnormal using the PhysioNet/CinC 2016 dataset. Features such as zero-crossing rate, MFCCs and spectral statistics are extracted with librosa and fed to a gradient-boosting classifier. The trained model is served through a small Flask web app where a user uploads a recording and receives a prediction.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">librosa</span><span class="tag">Flask</span></div>
+          <div class="media">
+            <figure><img class="r169 zoom" style="object-fit:contain" src="images/pcg-waveforms.png" alt="Two recordings from the dataset" loading="lazy"><figcaption>Two recordings from the dataset</figcaption></figure>
+            <div class="ph video" data-label="web app demo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <figure style="margin:0"><img class="zoom" src="images/thesis-tree-expansion.jpg" alt="Forward and backward search trees, tangent candidates and the connection point on three stress geometries" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 35%;border:1px solid var(--line);border-radius:var(--radius);background:#000"><figcaption>Bidirectional tree expansion on three stress geometries</figcaption></figure>
+        <div><p class="label upper">Planning</p><h3>Sampling-based planner implementations</h3><p>Implemented F-RRT* and Q-RRT* on image-based maps with real-time visualization and metric tracking, benchmarked kinodynamic planners on Dynobench unicycle environments, and built the bidirectional search-tree visualizer used to validate MCS-Connect on multi-convex, S-corridor and nested U-trap geometries.</p><div class="tags"><span class="tag">RRT*</span><span class="tag">Kinodynamic</span><span class="tag">OpenCV</span><span class="tag">Visualization</span></div></div>
+      </div>
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Planning · Optimization</p>
+          <h3>Bayesian optimization and sensitivity analysis for planner tuning</h3>
+          <p>Gaussian-process Bayesian optimization (expected improvement) over the planner's cost-function parameters, minimizing mean search time, followed by one-dimensional sensitivity sweeps around the optimum to show which parameters matter and how flat the optimum is. Three analysis modes and paper-quality figure output.</p>
+          <div class="tags"><span class="tag">Bayesian opt.</span><span class="tag">Gaussian processes</span><span class="tag">Python</span></div>
+          <div class="media">
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-bo-convergence.jpg" alt="Convergence of the best mean search time over 40 iterations" loading="lazy"><figcaption>Convergence of the best mean search time over 40 iterations</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain;background:#fff" src="images/mcs-sensitivity.jpg" alt="Sensitivity sweeps for the four tuned parameters" loading="lazy"><figcaption>Sensitivity sweeps for the four tuned parameters</figcaption></figure>
+          </div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="ph" data-label="NAO robot"></div>
+        <div><p class="label upper">Human-Robot Interaction</p><h3>NAO receptionist and guide robot</h3><p>Customized a NAO humanoid to greet and guide visitors for the NUST-Coventry Human-Robot Interaction Lab.</p><div class="tags"><span class="tag">NAO</span><span class="tag">Python</span></div></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ UAV DESIGN & PROPULSION ============ -->
+<section class="page" id="page-uav" data-page="uav">
+  <article class="post">
+    <header><h2 class="upper">UAV Design &amp; Propulsion</h2><span class="meta">Industry · ~5 years</span></header>
+    <div class="inner">
+      <p class="prose muted">Almost five years of fixed-wing UAV development, from aerodynamic integration and flight controls to leading the propulsion team. This is where I learned how engines, propellers and actuators set the limits a planner and controller have to respect.</p>
+      <div class="media" style="grid-template-columns: 2fr 1fr">
+        <figure class="one"><video controls preload="metadata" playsinline poster="images/flight-testing-poster.jpg" style="width:100%;aspect-ratio:16/9"><source src="videos/flight-testing.mp4" type="video/mp4">Your browser cannot play this video. <a href="videos/flight-testing.mp4">Download it</a>.</video><figcaption>Field deployment, catapult launch and flight test of a fixed-wing UAV</figcaption></figure>
+        <figure><img class="zoom" src="images/flight-mesum.jpg" alt="Mesum with the transmitter beside the launcher" loading="lazy" style="aspect-ratio:1;object-position:62% 25%"><figcaption>Pre-launch checks at the launcher</figcaption></figure>
+      </div>
+      <!-- Keep everything on this tab at capability level. No drawings, numbers or internal documents. -->
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Propulsion Systems</h2><span class="meta">Team lead · team of 6</span></header>
+    <div class="inner">
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Piston-Prop</p>
+          <h3>Engine test benches and propeller matching</h3>
+          <p>Designed and built thrust-stand test benches for small piston engines, used for break-in, tuning and propeller matching. Outdoor runs measure static thrust and RPM against throttle so the engine-propeller pair can be matched to the airframe across its flight envelope.</p>
+          <div class="tags"><span class="tag">Engine testing</span><span class="tag">Thrust stand</span><span class="tag">Prop matching</span><span class="tag">Data acquisition</span></div>
+          <div class="media tall">
+            <figure><img class="r916 zoom" src="images/engine-bench-1.jpg" alt="Test bench with a two-blade propeller" loading="lazy"><figcaption>Test bench with a two-blade propeller</figcaption></figure>
+            <figure><img class="r916 zoom" src="images/engine-bench-2.jpg" alt="Field test setup" loading="lazy"><figcaption>Field test setup</figcaption></figure>
+            <figure><span class="badge">Animation</span><video class="r916 zoom" src="videos/engine-bench-1.mp4" poster="images/engine-bench-1-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Engine run on the stand</figcaption></figure>
+            <figure><span class="badge">Animation</span><video class="r916 zoom" src="videos/engine-bench-2.mp4" poster="images/engine-bench-2-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Bench test in the field</figcaption></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Gas Turbine</p>
+          <h3>Micro turbojet testing</h3>
+          <p>Ground testing of micro turbojet engines on an instrumented stand: start-up sequence, thrust and temperature readings, and integration checks ahead of installation on high-speed platforms.</p>
+          <div class="tags"><span class="tag">Turbomachinery</span><span class="tag">Test stand</span><span class="tag">Integration</span></div>
+          <div class="media">
+            <figure><span class="badge">Animation</span><video class="r169 zoom" src="videos/turbojet-loop.mp4" poster="images/turbojet-loop-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Turbojet on the test stand</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/turbojet-1.jpg" alt="Engine mounted for a static run" loading="lazy"><figcaption>Engine mounted for a static run</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/turbojet-team.jpg" alt="The test team" loading="lazy"><figcaption>The test team</figcaption></figure>
+          </div>
+          <details style="margin-top:12px"><summary class="meta" style="cursor:pointer">Full test video (3 min)</summary>
+            <figure class="one"><video controls preload="metadata" playsinline poster="images/turbojet-test-poster.jpg" style="width:100%;aspect-ratio:16/9"><source src="videos/turbojet-test.mp4" type="video/mp4">Your browser cannot play this video. <a href="videos/turbojet-test.mp4">Download it</a>.</video><figcaption>Complete micro turbojet ground run</figcaption></figure>
+          </details>
+        </div>
+      </div>
+
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Solid Rocket Motors</p>
+          <h3>SRM design, optimization and multiphysics analysis</h3>
+          <p>Built an automated modelling and simulation environment that links grain geometry, internal ballistics, nozzle sizing, case thickness and weight and balance, then drives them with an optimizer against mission constraints so that many motor configurations can be evaluated quickly. Leading coupled fluid-thermal-structural analysis of the motor and its components through to static testing.</p>
+          <div class="tags"><span class="tag">Internal ballistics</span><span class="tag">Design automation</span><span class="tag">Optimization</span><span class="tag">CFD</span><span class="tag">Thermal</span><span class="tag">FEA</span></div>
+          <div class="media">
+            <figure><span class="badge">Animation</span><video class="r169 zoom" src="videos/srm-design.mp4" poster="images/srm-design-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Exploded view, assembly and cutaway of a motor design</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain" src="images/srm-optimization-flow.jpg" alt="Flowchart of the automated SRM design and optimization environment" loading="lazy"><figcaption>Automated design and optimization loop</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/srm-igniter.jpg" alt="Igniter assembly render" loading="lazy"><figcaption>Igniter assembly</figcaption></figure>
+          </div>
+          <!-- Renders only. No dimensions, performance figures, compositions or document numbers are shown anywhere on this site. -->
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Aircraft Design &amp; Aerodynamics</h2></header>
+    <div class="inner">
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Aircraft Design · BS Final Year Project</p>
+          <h3>Design, analysis and optimization of an electric aircraft</h3>
+          <p>Conceptual design of a battery-electric aircraft: weight, battery and component sizing of a baseline, then optimization with a sizing-matrix plot constrained by range, rate of climb and take-off distance. The optimized design was modelled in CATIA and checked with CFD, aerodynamic, propulsion, battery and performance analyses.</p>
+          <div class="tags"><span class="tag">Aircraft design</span><span class="tag">CATIA</span><span class="tag">ANSYS CFD</span><span class="tag">MATLAB</span><span class="tag">VSPAero</span><span class="tag">QBlade</span></div>
+          <div class="media">
+            <figure><img class="r169 zoom" src="images/electric-aircraft-3view.jpg" alt="Three-view of the optimized design" loading="lazy"><figcaption>Three-view of the optimized design</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/electric-aircraft-cfd.jpg" alt="Surface pressure from CFD" loading="lazy"><figcaption>Surface pressure from CFD</figcaption></figure>
+          </div>
+        </div>
+      </div>
+      <div class="entry">
+        <div class="ph" data-label="nacelle / duct CFD"></div>
+        <div><p class="label upper">Integration</p><h3>Inlet, nacelle and duct aerodynamics</h3><p>CFD-driven design of air inlets, nacelles and cooling ducts for propulsion integration on fixed-wing airframes.</p><div class="tags"><span class="tag">ANSYS Fluent</span><span class="tag">Internal flow</span></div></div>
+      </div>
+      <div class="entry">
+        <div class="ph" data-label="performance plot"></div>
+        <div><p class="label upper">Performance</p><h3>Vehicle performance estimation</h3><p>Range, endurance and climb estimates built from propulsion test data and aerodynamic models, used to size and select propulsion for each platform.</p><div class="tags"><span class="tag">Range &amp; endurance</span><span class="tag">Climb</span><span class="tag">MATLAB</span></div></div>
+      </div>
+      <div class="entry">
+        <div class="ph" data-label="FSI / flutter result"></div>
+        <div><p class="label upper">Aeroelasticity</p><h3>Two-way FSI and aeroelastic analysis</h3><p>Coupled fluid-structure interaction in ANSYS to study structural response and aeroelastic behavior of lifting surfaces.</p><div class="tags"><span class="tag">System Coupling</span><span class="tag">FSI</span></div></div>
+      </div>
+      <div class="entry">
+        <div class="ph" data-label="control linkage CAD"></div>
+        <div><p class="label upper">Flight Controls</p><h3>Control mechanism for a 6-seat aircraft</h3><p>Designed the complete manual control linkage for flaps, ailerons, rudder and elevator, with kinematic and inverse-kinematic analysis from stick to control surface.</p><div class="tags"><span class="tag">Kinematics</span><span class="tag">Mechanisms</span><span class="tag">CAD</span></div></div>
+      </div>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Personal</h2></header>
+    <div class="inner">
+      <div class="entry">
+        <div class="ph" data-label="DLE 60 EFI bench"></div>
+        <div><p class="label upper">Engine Control · In progress</p><h3>Custom EFI and ECU for a DLE 60</h3><p>My own conversion of a carbureted two-stroke UAV engine to electronic fuel injection, with a self-built microcontroller ECU. It is where my propulsion and control work meet. <a href="#projects">See in Projects</a></p><div class="tags"><span class="tag">ESP32</span><span class="tag">Embedded C</span><span class="tag">Fuel mapping</span></div></div>
+      </div>
+      <div class="entry">
+        <figure style="margin:0;position:relative"><span class="badge">Animation</span><video class="zoom" src="videos/drone-flying.mp4" poster="images/drone-flying-poster.jpg" autoplay muted loop playsinline preload="metadata" style="width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--line);border-radius:var(--radius);background:#000"></video></figure>
+        <div><p class="label upper">Flying</p><h3>Multirotor flying</h3><p>Hands-on time on the sticks keeps me honest about what real vehicles do. Here, a quadcopter flown up to the office window.</p><div class="tags"><span class="tag">Multirotor</span><span class="tag">Manual flight</span></div></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ PUBLICATIONS ============ -->
+<section class="page" id="page-publications" data-page="publications">
+  <article class="post">
+    <header><h2 class="upper">Publications</h2></header>
+    <div class="inner">
+      <p class="group-title upper">Journal Articles</p>
+      <div class="pub" style="grid-template-columns:140px 1fr;gap:6px 18px">
+        <img class="zoom" src="images/mcs-qualitative.jpg" alt="Figure from the paper" loading="lazy" style="grid-row:1/5;width:140px;aspect-ratio:1;object-fit:cover;border:1px solid var(--line);border-radius:var(--radius);background:#fff">
+        <span class="status">Under review</span>
+        <h3>Magnetically Coupled Sunlight-Connect: Accelerating Bidirectional Path Planning Through Adaptive Inter-Tree Attraction for Unmanned Surface Vehicles in Complex Marine Environments</h3>
+        <p class="muted"><strong>M. A. Irfani</strong>, K. F. Iqbal, Y. Ayaz, M. S. Nazir, K. Faraz</p>
+        <p class="meta">Ocean Engineering, 2026</p>
+      </div>
+      <p class="group-title upper" style="margin-top:12px">Theses</p>
+      <div class="pub">
+        <h3>Obstacle Avoidance for Marine Robots</h3>
+        <p class="muted"><strong>M. A. Irfani</strong>. MS Thesis, SMME, NUST, 2026. Supervisor: Dr. Khawaja Fahad Iqbal.</p>
+        <div class="btns"><a class="btn" href="#research">Details</a></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="page" id="page-experience" data-page="experience">
+  <article class="post">
+    <header><h2 class="upper">Experience</h2></header>
+    <div class="inner">
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="NaqCoDE logo"></div>
+        <div>
+          <!-- Fill in start year -->
+          <p class="meta">Jul 2024 to present · NaqCoDE Technologies, NUST</p>
+          <h3>Team Lead, Propulsion Systems</h3>
+          <ul>
+            <li>Lead a team of six engineers on UAV propulsion: piston-prop engines, micro turbines and solid rocket motors.</li>
+            <li>Own analysis, design, development and testing across the propulsion portfolio.</li>
+            <li>Lead high-fidelity fluid-thermal-structural analysis of solid rocket motors.</li>
+            <li>Develop and deliver internal technical training courses.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="NaqCoDE logo"></div>
+        <div>
+          <p class="meta">Oct 2022 to Jul 2024 · NaqCoDE Technologies, NUST</p>
+          <h3>Design Engineer, Aerodynamics &amp; Design Group</h3>
+          <ul>
+            <li>Designed the full manual flight control mechanism for a 6-seat passenger aircraft, including stick-to-surface kinematics.</li>
+            <li>Inlet, nacelle and duct aerodynamics; propeller selection and matching.</li>
+            <li>Vehicle performance estimation (range, endurance, climb) from propulsion data.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section class="page" id="page-education" data-page="education">
+  <article class="post">
+    <header><h2 class="upper">Academic Degrees</h2></header>
+    <div class="inner">
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="NUST logo"></div>
+        <div>
+          <h3>M.S. Robotics and Intelligent Machine Engineering</h3>
+          <p class="meta">SMME, National University of Sciences and Technology (NUST) · 2023 to 2026</p>
+          <p>CGPA 3.95 / 4.00. Thesis: Obstacle Avoidance for Marine Robots (Grade A).</p>
+          <figure class="one" style="margin-top:12px;max-width:520px"><img class="zoom" src="images/convocation.jpg" alt="Receiving the MS degree at the 14th NUST convocation, October 2026" loading="lazy" style="aspect-ratio:3/2"><figcaption>14th NUST Convocation, October 2026</figcaption></figure>
+          <!-- Put PDFs next to this file and update the file names -->
+          <div class="btns"><a class="btn" href="ms-degree.pdf">View Degree</a><a class="btn" href="ms-transcript.pdf">View Transcript</a></div>
+        </div>
+      </div>
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="IST logo"></div>
+        <div>
+          <h3>B.S. Aerospace Engineering</h3>
+          <p class="meta">Institute of Space Technology (IST), Islamabad · 2017 to 2021</p>
+          <p>CGPA 3.58 / 4.00, cum laude. Coursework included spacecraft dynamics and control.</p>
+          <div class="btns"><a class="btn" href="bs-degree.pdf">View Degree</a><a class="btn" href="bs-transcript.pdf">View Transcript</a></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="post">
+    <header><h2 class="upper">Professional &amp; Online Certifications</h2></header>
+    <div class="inner">
+      <div class="entry" style="grid-template-columns:200px 1fr">
+        <a href="certs/coursera-computational-motion-planning.pdf"><img src="images/cert-coursera-computational-motion-planning.jpg" alt="Certificate: Robotics: Computational Motion Planning" loading="lazy" style="width:100%;aspect-ratio:1.4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:var(--radius);background:#fff"></a>
+        <div><h3>Robotics: Computational Motion Planning</h3><p class="meta">University of Pennsylvania, Coursera · May 2025</p><div class="btns"><a class="btn" href="certs/coursera-computational-motion-planning.pdf">View Certificate</a></div></div>
+      </div>
+      <div class="entry" style="grid-template-columns:200px 1fr">
+        <a href="certs/udemy-human-robot-interaction.pdf"><img src="images/cert-udemy-human-robot-interaction.jpg" alt="Certificate: Robotics: Human-Robot Interaction" loading="lazy" style="width:100%;aspect-ratio:1.4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:var(--radius);background:#fff"></a>
+        <div><h3>Robotics: Human-Robot Interaction</h3><p class="meta">Udemy · Nov 2024</p><div class="btns"><a class="btn" href="certs/udemy-human-robot-interaction.pdf">View Certificate</a></div></div>
+      </div>
+      <div class="entry" style="grid-template-columns:200px 1fr">
+        <a href="certs/coursera-supervised-machine-learning.pdf"><img src="images/cert-coursera-supervised-machine-learning.jpg" alt="Certificate: Supervised Machine Learning: Regression and Classification" loading="lazy" style="width:100%;aspect-ratio:1.4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:var(--radius);background:#fff"></a>
+        <div><h3>Supervised Machine Learning: Regression and Classification</h3><p class="meta">DeepLearning.AI and Stanford Online, Coursera · Oct 2023</p><div class="btns"><a class="btn" href="certs/coursera-supervised-machine-learning.pdf">View Certificate</a></div></div>
+      </div>
+      <div class="entry" style="grid-template-columns:200px 1fr">
+        <a href="certs/coursera-aerial-robotics.pdf"><img src="images/cert-coursera-aerial-robotics.jpg" alt="Certificate: Robotics: Aerial Robotics" loading="lazy" style="width:100%;aspect-ratio:1.4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:var(--radius);background:#fff"></a>
+        <div><h3>Robotics: Aerial Robotics</h3><p class="meta">University of Pennsylvania, Coursera · Sep 2022</p><div class="btns"><a class="btn" href="certs/coursera-aerial-robotics.pdf">View Certificate</a></div></div>
+      </div>
+      <div class="entry" style="grid-template-columns:200px 1fr">
+        <a href="certs/udemy-ansys-cfd.pdf"><img src="images/cert-udemy-ansys-cfd.jpg" alt="Certificate: Mastering ANSYS CFD (Level 1)" loading="lazy" style="width:100%;aspect-ratio:1.4;object-fit:cover;object-position:top;border:1px solid var(--line);border-radius:var(--radius);background:#fff"></a>
+        <div><h3>Mastering ANSYS CFD (Level 1)</h3><p class="meta">Udemy · Dec 2021</p><div class="btns"><a class="btn" href="certs/udemy-ansys-cfd.pdf">View Certificate</a></div></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ HONORS ============ -->
+<section class="page" id="page-honors" data-page="honors">
+  <article class="post">
+    <header><h2 class="upper">Honors &amp; Awards</h2></header>
+    <div class="inner">
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="NUST"></div>
+        <div><p class="meta">2026</p><h3>MS thesis graded A</h3><p>Obstacle Avoidance for Marine Robots, SMME, NUST.</p></div>
+      </div>
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="IST"></div>
+        <div><p class="meta">2021</p><h3>Cum laude, B.S. Aerospace Engineering</h3><p>Institute of Space Technology, Islamabad.</p></div>
+      </div>
+      <div class="entry with-logo">
+        <div class="ph logo" data-label="award"></div>
+        <!-- Replace with a real award, scholarship or competition result -->
+        <div><p class="meta">Year</p><h3>Add an award or scholarship</h3><p>One line on what it was for.</p></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ ART ============ -->
+<section class="page" id="page-art" data-page="art">
+  <article class="post">
+    <header><h2 class="upper">Art</h2><span class="meta"><a href="https://www.instagram.com/irfanis_art/">@irfanis_art on Instagram</a></span></header>
+    <div class="inner">
+      <p class="prose">Drawing and painting have been my way of thinking with my hands since school. Most of my work is Arabic and Urdu calligraphy, alongside graphite portraits and the occasional landscape. The pieces below are the ones people have liked most; the full collection, including reels of recent work, is on Instagram.</p>
+      <div class="btns"><a class="btn" href="https://www.instagram.com/irfanis_art/">View on Instagram</a></div>
+    </div>
+  </article>
+  <article class="post">
+    <header><h2 class="upper">Calligraphy</h2></header>
+    <div class="inner">
+      <p class="prose muted">Quranic verses and names in ink, acrylic and, once, glitter. Click any piece to enlarge.</p>
+      <div class="gallery">
+        <figure><img class="zoom" src="art/calligraphy-B0RIDMZhRH5.jpg" alt="Wa-s-sama’a banaynaha bi-aydin (Quran 51:47)" width="931" height="612" loading="lazy"><figcaption><b>Wa-s-sama’a banaynaha bi-aydin (Quran 51:47)</b><br>Acrylic on canvas, 2 × 3 ft, 2019</figcaption></figure>
+        <figure><img class="zoom" src="art/calligraphy-CXD5qj8MsGY.jpg" alt="Kun fa-yakun (Be, and it is)" width="964" height="625" loading="lazy"><figcaption><b>Kun fa-yakun (Be, and it is)</b><br>Glitter on canvas, 35 × 23 in, 2021</figcaption></figure>
+        <figure><img class="zoom" src="art/calligraphy-B78OWxBh-je.jpg" alt="Fa-bi-ayyi ala’i Rabbikuma tukadhdhiban (Ar-Rahman)" width="955" height="716" loading="lazy"><figcaption><b>Fa-bi-ayyi ala’i Rabbikuma tukadhdhiban (Ar-Rahman)</b><br>Ink and colour, 2020</figcaption></figure>
+        <figure><img class="zoom" src="art/calligraphy-B75ktCfBnVB.jpg" alt="Muhammad (PBUH), Sirajan Munira" width="955" height="716" loading="lazy"><figcaption><b>Muhammad (PBUH), Sirajan Munira</b><br>Acrylic, 2020</figcaption></figure>
+        <figure><img class="zoom" src="art/calligraphy-B96mitWBzGa.jpg" alt="Ala bi-dhikrillahi tatma’innu-l-qulub (Quran 13:28)" width="948" height="711" loading="lazy"><figcaption><b>Ala bi-dhikrillahi tatma’innu-l-qulub (Quran 13:28)</b><br>Ink, with Urdu translation, 2020</figcaption></figure>
+        <figure><img class="zoom" src="art/calligraphy-BvnxmQhF8E_.jpg" alt="Iqra (Quran 96:1)" width="663" height="817" loading="lazy"><figcaption><b>Iqra (Quran 96:1)</b><br>Brush and ink, 2019</figcaption></figure>
+        <figure><img class="zoom" src="art/calligraphy-B8EF06xBaJ7.jpg" alt="Calligraphy written with a screwdriver" width="690" height="696" loading="lazy"><figcaption><b>Calligraphy written with a screwdriver</b><br>Acrylic, 2020</figcaption></figure>
+      </div>
+    </div>
+  </article>
+  <article class="post">
+    <header><h2 class="upper">Sketches</h2></header>
+    <div class="inner">
+      <p class="prose muted">Graphite portraits, mostly from reference photographs, and one aircraft.</p>
+      <div class="gallery">
+        <figure><img class="zoom" src="art/sketches-BtzwJvGDjNI.jpg" alt="The Old Man" width="973" height="1200" loading="lazy"><figcaption><b>The Old Man</b><br>Graphite, 2019. After a photograph by Rishaeel Haider</figcaption></figure>
+        <figure><img class="zoom" src="art/sketches-BsAaeqmgiaL.jpg" alt="Quaid-e-Azam Muhammad Ali Jinnah" width="942" height="1200" loading="lazy"><figcaption><b>Quaid-e-Azam Muhammad Ali Jinnah</b><br>Graphite, 2018</figcaption></figure>
+        <figure><img class="zoom" src="art/sketches-BwccjJPnliV.jpg" alt="Girl" width="992" height="954" loading="lazy"><figcaption><b>Girl</b><br>Graphite, 2019</figcaption></figure>
+        <figure><img class="zoom" src="art/sketches-BufP9ATFcIr.jpg" alt="Child" width="558" height="818" loading="lazy"><figcaption><b>Child</b><br>Graphite, 2019</figcaption></figure>
+        <figure><img class="zoom" src="art/sketches-B5MwU8ohE_H.jpg" alt="F-16" width="992" height="974" loading="lazy"><figcaption><b>F-16</b><br>Pencil and watercolour, 2019</figcaption></figure>
+        <figure><img class="zoom" src="art/sketches-BuZeKdKFjAj.jpg" alt="The Cat" width="992" height="642" loading="lazy"><figcaption><b>The Cat</b><br>Graphite, 2019</figcaption></figure>
+      </div>
+    </div>
+  </article>
+  <article class="post">
+    <header><h2 class="upper">Paintings</h2></header>
+    <div class="inner">
+      <p class="prose muted">Watercolour and acrylic landscapes.</p>
+      <div class="gallery">
+        <figure><img class="zoom" src="art/paintings-BtxbvmEFDPB.jpg" alt="Northern Pakistan" width="971" height="652" loading="lazy"><figcaption><b>Northern Pakistan</b><br>Watercolour, 2019. After a photograph by Rishaeel Haider</figcaption></figure>
+        <figure><img class="zoom" src="art/paintings-BtlSBlTDN70.jpg" alt="Winter pines" width="970" height="689" loading="lazy"><figcaption><b>Winter pines</b><br>Watercolour and ink, 2019</figcaption></figure>
+        <figure><img class="zoom" src="art/paintings-BtQkXCsFjPN.jpg" alt="Sunset" width="992" height="717" loading="lazy"><figcaption><b>Sunset</b><br>Acrylic, 2019</figcaption></figure>
+      </div>
+    </div>
+  </article>
+</section>
+
+</main>
+
+<!-- ============ SIDEBAR (shows on every tab) ============ -->
+<aside class="side">
+  <div class="post profile">
+    <img src="images/profile.jpg" alt="Mesum Ali Irfani" width="150" height="150" style="width:150px;height:150px;border-radius:50%;object-fit:cover;border:1px solid var(--line)">
+    <h2 class="upper">Mesum Ali Irfani</h2>
+    <p class="role upper">Aerospace and Robotics Engineer</p>
+    <p class="muted" style="font-size:0.95rem">UAV design and propulsion · Motion planning and control</p>
+    <blockquote>"Knowledge is better than wealth because it protects you, while you have to protect wealth."<br><span class="meta" style="font-style:normal;display:block;margin-top:6px">Imam Ali ibn Abi Talib (AS)</span></blockquote>
+  </div>
+  <div class="post connect">
+    <h3 class="upper">Connect</h3>
+    <ul>
+      <li><a href="mailto:mesumirfani@gmail.com"><span>Email</span><span>mesumirfani@gmail.com</span></a></li>
+      <!-- Add your Google Scholar and ORCID URLs when you have them -->
+      <li><a href="https://www.linkedin.com/in/mesum-irfani-1763b330b/"><span>LinkedIn</span><span>mesum-irfani</span></a></li>
+      <li><a href="https://github.com/MesumIrfani"><span>GitHub</span><span>MesumIrfani</span></a></li>
+      <li><a href="#"><span>Google Scholar</span><span>add link</span></a></li>
+      <li><a href="#"><span>ORCID</span><span>add link</span></a></li>
+      <li><a href="https://substack.com/@mesumirfani"><span>Substack</span><span>@mesumirfani</span></a></li>
+      <li><a href="https://www.instagram.com/irfanis_art/"><span>Instagram (art)</span><span>@irfanis_art</span></a></li>
+    </ul>
+  </div>
+</aside>
+</div>
+
+<footer class="foot">
+  <p class="meta">© 2026 Mesum Ali Irfani</p>
+</footer>
+
+<script>
+(function () {
+  var pages = ["home", "about", "research", "projects", "uav", "publications", "experience", "education", "honors", "art"];
+
+  function show(name) {
+    if (pages.indexOf(name) === -1) return false;
+    document.querySelectorAll(".page").forEach(function (p) {
+      p.classList.toggle("active", p.dataset.page === name);
+    });
+    document.querySelectorAll(".tabs a").forEach(function (a) {
+      if (a.getAttribute("href") === "#" + name) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    var cur = document.querySelector('.tabs a[aria-current="page"]');
+    if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: "nearest", inline: "center" });
+    window.scrollTo(0, 0);
+    return true;
+  }
+
+  function route() {
+    var name = location.hash.replace("#", "");
+    if (!show(name) && !document.querySelector(".page.active")) show("home");
+  }
+
+  window.addEventListener("hashchange", route);
+  var start = location.hash.replace("#", "");
+  show(pages.indexOf(start) !== -1 ? start : "home");
+})();
+</script>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Enlarged media"><button type="button" id="lbClose">Close</button><div id="lbBody"></div></div>
+<script>
+(function () {
+  var lb = document.getElementById("lb"), body = document.getElementById("lbBody");
+  function close() { lb.classList.remove("open"); body.innerHTML = ""; }
+  document.getElementById("lbClose").addEventListener("click", close);
+  lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  document.querySelectorAll(".zoom").forEach(function (el) {
+    el.addEventListener("click", function () {
+      var big;
+      if (el.tagName === "VIDEO") { big = document.createElement("video"); big.src = el.getAttribute("src"); big.poster = el.getAttribute("poster"); big.controls = true; big.autoplay = true; big.loop = true; big.muted = true; big.playsInline = true; }
+      else { big = document.createElement("img"); big.src = el.src; big.alt = el.alt; }
+      body.innerHTML = ""; body.appendChild(big); lb.classList.add("open");
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -61,6 +61,7 @@ ul { margin: 0; }
 .ph::before { content: "IMAGE \2192  " attr(data-label); }
 .ph.video::before { content: "VIDEO \2192  " attr(data-label); }
 .ph.logo { aspect-ratio: 1; width: 72px; flex: none; padding: 4px; font-size: 0.6rem; }
+img.logo { width: 72px; height: 72px; object-fit: contain; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
 .ph.logo::before { content: attr(data-label); }
 
 /* Header */
@@ -613,7 +614,7 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
     <header><h2 class="upper">Experience</h2><span class="meta">NaqCoDE Technologies · AvRID</span></header>
     <div class="inner">
       <div class="entry with-logo">
-        <div class="ph logo" data-label="NaqCoDE logo"></div>
+        <img class="logo" src="images/logo-naqcode.jpg" alt="NaqCoDE Technologies" width="72" height="72">
         <div>
           <!-- Fill in start year -->
           <p class="meta">Jul 2024 to present · NaqCoDE Technologies, NUST</p>
@@ -627,7 +628,7 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
         </div>
       </div>
       <div class="entry with-logo">
-        <div class="ph logo" data-label="NaqCoDE logo"></div>
+        <img class="logo" src="images/logo-naqcode.jpg" alt="NaqCoDE Technologies" width="72" height="72">
         <div>
           <p class="meta">Oct 2022 to Jul 2024 · NaqCoDE Technologies, NUST</p>
           <h3>Design Engineer, Aerodynamics &amp; Design Group</h3>
@@ -639,7 +640,7 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
         </div>
       </div>
       <div class="entry with-logo">
-        <div class="ph logo" data-label="AvRID logo"></div>
+        <img class="logo" src="images/logo-avrid.jpg" alt="AvRID" width="72" height="72">
         <div>
           <p class="meta">Jan 2022 to Jun 2022 · Aviation Research, Indigenization and Development (AvRID), Kamra</p>
           <h3>Design Officer, Damage Tolerance Analysis Lab</h3>
@@ -658,7 +659,7 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
     <header><h2 class="upper">Academic Degrees</h2></header>
     <div class="inner">
       <div class="entry with-logo">
-        <div class="ph logo" data-label="NUST logo"></div>
+        <img class="logo" src="images/logo-nust.jpg" alt="NUST" width="72" height="72">
         <div>
           <h3>M.S. Robotics and Intelligent Machine Engineering</h3>
           <p class="meta">SMME, National University of Sciences and Technology (NUST) · 2023 to 2026</p>
@@ -669,7 +670,7 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
         </div>
       </div>
       <div class="entry with-logo">
-        <div class="ph logo" data-label="IST logo"></div>
+        <img class="logo" src="images/logo-ist.jpg" alt="Institute of Space Technology" width="72" height="72">
         <div>
           <h3>B.S. Aerospace Engineering</h3>
           <p class="meta">Institute of Space Technology (IST), Islamabad · 2017 to 2021</p>
@@ -713,11 +714,11 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
     <header><h2 class="upper">Honors &amp; Awards</h2></header>
     <div class="inner">
       <div class="entry with-logo">
-        <div class="ph logo" data-label="NUST"></div>
+        <img class="logo" src="images/logo-nust.jpg" alt="NUST" width="72" height="72">
         <div><p class="meta">2026</p><h3>MS thesis graded A</h3><p>Obstacle Avoidance for Marine Robots, SMME, NUST.</p></div>
       </div>
       <div class="entry with-logo">
-        <div class="ph logo" data-label="IST"></div>
+        <img class="logo" src="images/logo-ist.jpg" alt="IST" width="72" height="72">
         <div><p class="meta">2021</p><h3>Cum laude, B.S. Aerospace Engineering</h3><p>Institute of Space Technology, Islamabad.</p></div>
       </div>
       <div class="entry with-logo">

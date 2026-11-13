@@ -554,9 +554,21 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
           </div>
         </div>
       </div>
-      <div class="entry">
-        <div class="ph" data-label="nacelle / duct CFD"></div>
-        <div><p class="label upper">Integration</p><h3>Inlet, nacelle and duct aerodynamics</h3><p>CFD-driven design of air inlets, nacelles and cooling ducts for propulsion integration on fixed-wing airframes.</p><div class="tags"><span class="tag">ANSYS Fluent</span><span class="tag">Internal flow</span></div></div>
+      <div class="entry" style="grid-template-columns:1fr">
+        <div>
+          <p class="label upper">Integration · CFD</p>
+          <h3>Subsonic S-duct intake for a micro turbojet</h3>
+          <p>Design and CFD study of a buried, S-shaped subsonic intake feeding a micro turbojet. The duct centreline is a cubic Bezier curve, so the shape is controlled by a handful of parameters. A parametric study moved the bend along the duct and tried double-bend profiles, with total pressure and velocity resolved at the aerodynamic interface plane (AIP) in ANSYS CFX, to minimise the distortion coefficient while keeping pressure recovery high. Follow-on cases checked the chosen profile at angle of attack and sideslip, with the starter motor in the flow path, and with a larger inlet face.</p>
+          <div class="tags"><span class="tag">ANSYS CFX</span><span class="tag">Bezier parameterisation</span><span class="tag">Distortion coefficient</span><span class="tag">Pressure recovery</span><span class="tag">Parametric study</span></div>
+          <div class="media">
+            <figure><span class="badge">Animation</span><video class="r169 zoom" src="videos/intake-study.mp4" poster="images/intake-study-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption>Seven centreline profiles: total pressure along the duct and at the engine face</figcaption></figure>
+            <figure><img class="r169 zoom" style="object-fit:contain" src="images/intake-parametric.png" alt="Distortion coefficient and pressure recovery against bend position" loading="lazy"><figcaption>Distortion coefficient and pressure recovery for each profile</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/intake-cad.jpg" alt="CAD model of the S-duct intake" loading="lazy"><figcaption>Intake geometry</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/intake-mesh.jpg" alt="CFD mesh of the intake with inflation layers" loading="lazy"><figcaption>Mesh with wall inflation layers</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/intake-aip-baseline.jpg" alt="Total pressure contours at the AIP" loading="lazy"><figcaption>Total pressure at the AIP, baseline geometry</figcaption></figure>
+            <figure><img class="r169 zoom" src="images/intake-velocity.jpg" alt="Velocity contours on the longitudinal plane" loading="lazy"><figcaption>Velocity on the longitudinal plane</figcaption></figure>
+          </div>
+        </div>
       </div>
       <div class="entry">
         <div class="ph" data-label="performance plot"></div>
